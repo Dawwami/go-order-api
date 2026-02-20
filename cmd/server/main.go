@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/Dawwami/go-order-api/internal/database"
+	"github.com/Dawwami/go-order-api/internal/model"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -17,7 +18,7 @@ func main() {
 	db := database.GetDB()
 
 	// TODO: AutoMigrate models (Phase 2)
-	_ = db
+	db.AutoMigrate(&model.User{}, &model.Product{}, &model.Order{})
 
 	// Setup Gin router
 	r := gin.Default()
