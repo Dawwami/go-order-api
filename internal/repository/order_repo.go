@@ -22,7 +22,7 @@ func (r *OrderRepository) Create(ctx context.Context, order *model.Order) error 
 func (r *OrderRepository) FindAll(ctx context.Context) ([]model.Order, error) {
 	var orders []model.Order
 
-	err := r.db.WithContext(ctx).Find(orders).Error
+	err := r.db.WithContext(ctx).Find(&orders).Error
 	if err != nil {
 		return nil, err
 	}
@@ -38,4 +38,13 @@ func (r *OrderRepository) FindByID(ctx context.Context, id uint) (*model.Order, 
 	return &order, nil
 }
 
-//func (r *OrderRepository) FindByE
+func (r *OrderRepository) FindByUserID(ctx context.Context, userId uint) ([]model.Order, error) {
+	var orders []model.Order
+
+	err := r.db.WithContext(ctx).Where("user_id = ?", userId).Find(&orders).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return orders, nil
+}
